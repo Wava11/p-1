@@ -1,8 +1,8 @@
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { FormControl, IconButton, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { Component } from 'react';
-import { days, priorities } from './preference.types';
-import styles from '../../../../styles/Preferences.module.css';
+import { days, priorities } from '../../utils/preference.types';
+import styles from '../../styles/Preferences.module.css';
 
 export class PreferenceView extends Component {
     constructor(props) {

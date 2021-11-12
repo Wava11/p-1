@@ -4,8 +4,8 @@ import TtlIcon from '@mui/icons-material/TimeToLeave';
 import { Card, Divider, IconButton } from '@mui/material';
 import React, { Component } from 'react';
 import { removeElement, updateElement } from '../../utils/array.utils';
-import { updateUserPreferences, getUserPreferences } from './api';
-import { PreferenceView } from './components/preference';
+import { updateUserPreferences, getUserPreferences } from '../../utils/preference.api';
+import { PreferenceView } from '../../components/preference';
 import styles from '../../styles/Preferences.module.css'
 
 export default class PreferencesPage extends Component {
