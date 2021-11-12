@@ -13,7 +13,7 @@ export default function MyApp({ Component, pageProps }) {
         />
         <meta name="description" content="Description" />
         <meta name="keywords" content="Keywords" />
-        <title>Next.js PWA Example</title>
+        <title>P+1</title>
 
         <link rel="manifest" href="/manifest.json" />
         <link

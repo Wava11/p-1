@@ -1,23 +1,30 @@
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SendIcon from '@mui/icons-material/Send';
+import TtlIcon from '@mui/icons-material/TimeToLeave';
 import { Card, Divider, IconButton } from '@mui/material';
 import React, { Component } from 'react';
 import { removeElement, updateElement } from '../../utils/array.utils';
-import { submitPreferences } from './api';
+import { updateUserPreferences, getUserPreferences } from './api';
 import { PreferenceView } from './components/preference';
-
+import styles from '../../styles/Preferences.module.css'
 
 export default class PreferencesPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            username: "matan",
             preferences: []
         };
     }
 
+    async componentDidMount() {
+        const preferences = await getUserPreferences(this.state.username);
+        this.setState({ preferences });
+    }
+
     render() {
         const { preferences } = this.state;
-        return <Card style={{ margin: "15px", padding: "10px" }}>
+        return <Card className={styles.padded}>
             {preferences.map((preference, index) =>
                 <div>
                     <PreferenceView
@@ -37,6 +44,9 @@ export default class PreferencesPage extends Component {
                 <IconButton disabled={preferences.filter(p => p !== undefined).length == 0} onClick={this.submitPreferences}>
                     <SendIcon />
                 </IconButton>
+                <IconButton onClick={this.notify}>
+                    <TtlIcon />
+                </IconButton>
             </div>
         </Card>;
     }
@@ -47,7 +57,22 @@ export default class PreferencesPage extends Component {
 
     submitPreferences = () => {
         const preferences = this.state.preferences.filter(p => p !== undefined);
-        return submitPreferences(preferences);
+        return updateUserPreferences(this.state.username, preferences);
+    };
+
+    notify = async () => {
+        if ("Notification" in window) {
+            if (Notification.permission == "granted") {
+                new Notification("Hello");
+            } else {
+                const permission = await Notification.requestPermission();
+                if (permission == "granted") {
+                    new Notification("Thanks!");
+                }
+            }
+        } else {
+            alert("Notifications are not enabled by your browser :(");
+        }
     };
 
     removePreference = (index) => () =>

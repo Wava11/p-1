@@ -2,7 +2,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { FormControl, IconButton, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { Component } from 'react';
 import { days, priorities } from './preference.types';
-
+import styles from '../../../../styles/Preferences.module.css';
 
 export class PreferenceView extends Component {
     constructor(props) {
@@ -13,7 +13,6 @@ export class PreferenceView extends Component {
         const { onRemove, onSetComment, onSetDay, onSetPriority, preference } = this.props;
         const dayOfWeekLabelId = "day-of-week-label";
         const priorityLabelId = "priority-label";
-        debugger;
         return <div style={{ margin: "10px" }}>
             <FormControl>
                 <InputLabel id={dayOfWeekLabelId}>Day of week</InputLabel>
@@ -21,7 +20,7 @@ export class PreferenceView extends Component {
                     labelId={dayOfWeekLabelId}
                     label="Day of week"
                     value={preference?.day ?? ""}
-                    style={{ width: "180px", margin: "10px" }}
+                    className={styles.input}
                     onChange={e => onSetDay(e.target.value)}
                 >
                     {days.map(day => <MenuItem value={day}>{day}</MenuItem>)}
@@ -34,7 +33,7 @@ export class PreferenceView extends Component {
                     labelId={priorityLabelId}
                     label="Priority"
                     value={preference?.priority ?? ""}
-                    style={{ width: "180px", margin: "10px" }}
+                    className={styles.input}
                     onChange={e => onSetPriority(e.target.value)}
                 >
                     {priorities.map(priority => <MenuItem value={priority}>{priority}</MenuItem>)}
@@ -43,7 +42,8 @@ export class PreferenceView extends Component {
             <TextField
                 label="Comment"
                 onChange={e => onSetComment(e.target.value)}
-                style={{ width: "180px", margin: "10px" }} />
+                className={styles.input}
+            />
             <IconButton onClick={onRemove} style={{ margin: "10px" }}>
                 <DeleteForeverIcon />
             </IconButton>

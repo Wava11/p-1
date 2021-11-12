@@ -1,0 +1,9 @@
+.padded {
+    margin: 15px;
+    padding: 10px;
+}
+
+.input {
+    width: 180px;
+    margin: 10px;
+}
