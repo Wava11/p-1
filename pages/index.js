@@ -1,51 +1,30 @@
 import Link from 'next/link';
+import { useContext, useState } from 'react';
 import styles from '../styles/Home.module.css';
+import { UserContext } from '../user.session';
 
 export default function Home() {
+  const [loggedUsername, setLoggedUsername] = useState("");
+  const userContextValue = { setLoggedUsername, loggedUsername }
+  debugger
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
         <div className={styles.grid}>
 
-          <Link href="/login">
-            <a>Login</a>
-          </Link>
+          <UserContext.Provider value={userContextValue}>
+            <Link href="/login">
+              <a>Login</a>
+            </Link>
 
-          <Link href="/preferences">
-            <a>Preferences</a>
-          </Link>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+            <Link href="/schedule">
+              <a>Schedule</a>
+            </Link>
+          </UserContext.Provider>
         </div>
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+
     </div>
   );
 }

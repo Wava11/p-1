@@ -1,7 +1,10 @@
-import Head from 'next/head'
-import '../styles/globals.css'
+import Head from 'next/head';
+import { useState } from 'react';
+import '../styles/globals.css';
 
 export default function MyApp({ Component, pageProps }) {
+  const [username, setUsername] = useState();
+  debugger
   return (
     <>
       <Head>
@@ -31,7 +34,7 @@ export default function MyApp({ Component, pageProps }) {
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#317EFB" />
       </Head>
-      <Component {...pageProps} />
+      <Component {...pageProps} username={username} setUsername={setUsername} />
     </>
-  )
+  );
 }

@@ -1,18 +1,18 @@
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SendIcon from '@mui/icons-material/Send';
 import TtlIcon from '@mui/icons-material/TimeToLeave';
-import { Card, Divider, IconButton } from '@mui/material';
+import { Card, Divider, IconButton, Typography } from '@mui/material';
+import Link from 'next/link';
 import React, { Component } from 'react';
-import { removeElement, updateElement } from '../../utils/array.utils';
-import { updateUserPreferences, getUserPreferences } from '../../utils/preference.api';
 import { PreferenceView } from '../../components/preference';
-import styles from '../../styles/Preferences.module.css'
+import styles from '../../styles/Preferences.module.css';
+import { removeElement, updateElement } from '../../utils/array.utils';
+import { getUserPreferences, updateUserPreferences } from '../../utils/preference.api';
 
 export default class PreferencesPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "matan",
             preferences: []
         };
     }
@@ -23,8 +23,14 @@ export default class PreferencesPage extends Component {
     }
 
     render() {
+        const { username } = this.props;
         const { preferences } = this.state;
+        debugger
+        if(!username) {
+            return <Link href="/login">Login</Link>
+        }
         return <Card className={styles.padded}>
+            <Typography>Hello {username}!</Typography>
             {preferences.map((preference, index) =>
                 <div>
                     <PreferenceView
@@ -41,23 +47,22 @@ export default class PreferencesPage extends Component {
                 <IconButton disabled={preferences.filter(p => p?.day === undefined).length > 0} onClick={this.addNewPreference}>
                     <AddCircleIcon />
                 </IconButton>
-                <IconButton disabled={preferences.filter(p => p !== undefined).length == 0} onClick={this.submitPreferences}>
+                <IconButton disabled={preferences.filter(p => p !== undefined).length == 0} onClick={this.submitPreferences(username)}>
                     <SendIcon />
-                </IconButton>
-                <IconButton onClick={this.notify}>
-                    <TtlIcon />
                 </IconButton>
             </div>
         </Card>;
     }
 
+
+
     addNewPreference = () => {
         this.setState(({ preferences }) => ({ preferences: [...preferences, undefined] }));
     };
 
-    submitPreferences = () => {
+    submitPreferences = (username) => () => {
         const preferences = this.state.preferences.filter(p => p !== undefined);
-        return updateUserPreferences(this.state.username, preferences);
+        return updateUserPreferences(username, preferences);
     };
 
     notify = async () => {
@@ -87,4 +92,4 @@ export default class PreferencesPage extends Component {
     setPriorityOf = (index) =>
         (priority) =>
             this.setState(({ preferences }) => ({ preferences: updateElement(index, "priority", priority, preferences) }));
-};
+}
