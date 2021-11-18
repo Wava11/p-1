@@ -7,3 +7,17 @@
     width: 180px;
     margin: 10px;
 }
+
+.actionsArea {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.action {
+    
+}
+
+.sendButton {
+    transform: scaleX(-1);
+}

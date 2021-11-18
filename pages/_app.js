@@ -3,8 +3,7 @@ import { useState } from 'react';
 import '../styles/globals.css';
 
 export default function MyApp({ Component, pageProps }) {
-  const [username, setUsername] = useState();
-  debugger
+  const [user, setUser] = useState();
   return (
     <>
       <Head>
@@ -34,7 +33,7 @@ export default function MyApp({ Component, pageProps }) {
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#317EFB" />
       </Head>
-      <Component {...pageProps} username={username} setUsername={setUsername} />
+      <Component {...pageProps} user={user} setUser={setUser} />
     </>
   );
 }

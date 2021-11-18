@@ -6,7 +6,6 @@ import { UserContext } from '../user.session';
 export default function Home() {
   const [loggedUsername, setLoggedUsername] = useState("");
   const userContextValue = { setLoggedUsername, loggedUsername }
-  debugger
   return (
     <div className={styles.container}>
       <main className={styles.main}>

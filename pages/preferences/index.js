@@ -1,7 +1,7 @@
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import EventBusyIcon from '@mui/icons-material/EventBusy';
 import SendIcon from '@mui/icons-material/Send';
-import TtlIcon from '@mui/icons-material/TimeToLeave';
-import { Card, Divider, IconButton, Typography } from '@mui/material';
+import { Button, Card, Divider, IconButton, Typography } from '@mui/material';
 import Link from 'next/link';
 import React, { Component } from 'react';
 import { PreferenceView } from '../../components/preference';
@@ -23,14 +23,13 @@ export default class PreferencesPage extends Component {
     }
 
     render() {
-        const { username } = this.props;
+        const { user } = this.props;
         const { preferences } = this.state;
-        debugger
-        if(!username) {
-            return <Link href="/login">Login</Link>
+        if (!user) {
+            return <Link href="/login">Login</Link>;
         }
         return <Card className={styles.padded}>
-            <Typography>Hello {username}!</Typography>
+            <Typography>שלום {user.name} 👋 </Typography>
             {preferences.map((preference, index) =>
                 <div>
                     <PreferenceView
@@ -43,11 +42,24 @@ export default class PreferencesPage extends Component {
                     <Divider />
                 </div>
             )}
-            <div>
-                <IconButton disabled={preferences.filter(p => p?.day === undefined).length > 0} onClick={this.addNewPreference}>
-                    <AddCircleIcon />
-                </IconButton>
-                <IconButton disabled={preferences.filter(p => p !== undefined).length == 0} onClick={this.submitPreferences(username)}>
+            <div className={styles.actionsArea}>
+                <Button
+                    className={styles.action}
+                    variant="outlined"
+                    color="success"
+                    disabled={preferences.filter(p => p?.day === undefined).length > 0}
+                    onClick={this.addNewPreference(true)}>
+                    אעדיף את יום <EventAvailableIcon />
+                </Button>
+                <Button
+                    className={styles.action}
+                    variant="outlined"
+                    color="warning"
+                    disabled={preferences.filter(p => p?.day === undefined).length > 0}
+                    onClick={this.addNewPreference(false)}>
+                    אעדיף שלא ביום <EventBusyIcon />
+                </Button>
+                <IconButton className={styles.sendButton} disabled={preferences.filter(p => p !== undefined).length == 0} onClick={this.submitPreferences(user._id)}>
                     <SendIcon />
                 </IconButton>
             </div>
@@ -56,13 +68,15 @@ export default class PreferencesPage extends Component {
 
 
 
-    addNewPreference = () => {
-        this.setState(({ preferences }) => ({ preferences: [...preferences, undefined] }));
+    addNewPreference = (isRequest) =>()=> {
+        this.setState(({ preferences }) => ({ preferences: [...preferences, {isRequest}] }));
     };
+    removePreference = (index) => () =>
+        this.setState(({ preferences }) => ({ preferences: removeElement(index, preferences) }));
 
-    submitPreferences = (username) => () => {
+    submitPreferences = (userId) => () => {
         const preferences = this.state.preferences.filter(p => p !== undefined);
-        return updateUserPreferences(username, preferences);
+        return updateUserPreferences(userId, preferences);
     };
 
     notify = async () => {
@@ -80,8 +94,6 @@ export default class PreferencesPage extends Component {
         }
     };
 
-    removePreference = (index) => () =>
-        this.setState(({ preferences }) => ({ preferences: removeElement(index, preferences) }));
 
     setCommentOf = (index) =>
         (comment) =>

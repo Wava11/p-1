@@ -1,8 +1,10 @@
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { FormControl, IconButton, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { FormControl, IconButton, MenuItem, Select, TextField } from '@mui/material';
 import React, { Component } from 'react';
-import { days, priorities } from '../../utils/preference.types';
 import styles from '../../styles/Preferences.module.css';
+import { days, priorities } from '../../utils/preference.types';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import EventBusyIcon from '@mui/icons-material/EventBusy';
 
 export class PreferenceView extends Component {
     constructor(props) {
@@ -11,39 +13,42 @@ export class PreferenceView extends Component {
     }
     render() {
         const { onRemove, onSetComment, onSetDay, onSetPriority, preference } = this.props;
-        const dayOfWeekLabelId = "day-of-week-label";
-        const priorityLabelId = "priority-label";
         return <div style={{ margin: "10px" }}>
+            {preference.isRequest ? <EventAvailableIcon color="success"/> : <EventBusyIcon color="warning"/>}
             <FormControl>
-                <InputLabel id={dayOfWeekLabelId}>Day of week</InputLabel>
                 <Select
-                    labelId={dayOfWeekLabelId}
-                    label="Day of week"
-                    value={preference?.day ?? ""}
+                    displayEmpty
+                    value={preference?.day}
                     className={styles.input}
                     onChange={e => onSetDay(e.target.value)}
+                    renderValue={selected =>
+                        selected ? selected.name : <em> יום...</em>
+                    }
                 >
-                    {days.map(day => <MenuItem value={day}>{day}</MenuItem>)}
+                    {days.map(day => <MenuItem value={day}>{day.name}</MenuItem>)}
                 </Select>
             </FormControl>
 
             <FormControl>
-                <InputLabel id={priorityLabelId}>Priority</InputLabel>
                 <Select
-                    labelId={priorityLabelId}
-                    label="Priority"
-                    value={preference?.priority ?? ""}
+                    displayEmpty
+                    value={preference?.priority}
                     className={styles.input}
                     onChange={e => onSetPriority(e.target.value)}
+                    renderValue={selected =>
+                        selected ? selected.name : <em> בעדיפות...</em>
+                    }
                 >
-                    {priorities.map(priority => <MenuItem value={priority}>{priority}</MenuItem>)}
+                    {priorities.map(priority => <MenuItem value={priority}>{priority.name}</MenuItem>)}
                 </Select>
             </FormControl>
-            <TextField
-                label="Comment"
-                onChange={e => onSetComment(e.target.value)}
-                className={styles.input}
-            />
+            <FormControl>
+                <TextField
+                    label="Comment"
+                    onChange={e => onSetComment(e.target.value)}
+                    className={styles.input}
+                />
+            </FormControl>
             <IconButton onClick={onRemove} style={{ margin: "10px" }}>
                 <DeleteForeverIcon />
             </IconButton>
