@@ -97,8 +97,8 @@
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  color: #d8be69;
+  border-color: #d8be69;
 }
 
 .card h3 {

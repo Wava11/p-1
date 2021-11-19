@@ -8,8 +8,9 @@ import { PreferenceView } from '../../components/preference';
 import styles from '../../styles/Preferences.module.css';
 import { removeElement, updateElement } from '../../utils/array.utils';
 import { getUserPreferences, updateUserPreferences } from '../../utils/preference.api';
+import { withRouter, } from 'next/router';
 
-export default class PreferencesPage extends Component {
+class PreferencesPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,12 +27,12 @@ export default class PreferencesPage extends Component {
         const { user } = this.props;
         const { preferences } = this.state;
         if (!user) {
-            return <Link href="/login">Login</Link>;
+            return <Link href="/login"><Button>Login</Button></Link>;
         }
         return <Card className={styles.padded}>
             <Typography>שלום {user.name} 👋 </Typography>
-            {preferences.map((preference, index) =>
-                <div>
+            {preferences.map((preference, index) => <>
+                <div className={styles.preferencesList}>
                     <PreferenceView
                         preference={preference}
                         onSetComment={this.setCommentOf(index)}
@@ -39,12 +40,13 @@ export default class PreferencesPage extends Component {
                         onSetPriority={this.setPriorityOf(index)}
                         onRemove={this.removePreference(index)}
                     />
-                    <Divider />
                 </div>
+                <Divider />
+            </>
             )}
             <div className={styles.actionsArea}>
                 <Button
-                    className={styles.action}
+                    style={{ margin: "10px",padding:"5px" }}
                     variant="outlined"
                     color="success"
                     disabled={preferences.filter(p => p?.day === undefined).length > 0}
@@ -52,14 +54,14 @@ export default class PreferencesPage extends Component {
                     אעדיף את יום <EventAvailableIcon />
                 </Button>
                 <Button
-                    className={styles.action}
+                    style={{ margin: "10px",padding:"5px" }}
                     variant="outlined"
                     color="warning"
                     disabled={preferences.filter(p => p?.day === undefined).length > 0}
                     onClick={this.addNewPreference(false)}>
                     אעדיף שלא ביום <EventBusyIcon />
                 </Button>
-                <IconButton className={styles.sendButton} disabled={preferences.filter(p => p !== undefined).length == 0} onClick={this.submitPreferences(user._id)}>
+                <IconButton className={styles.sendButton} disabled={preferences.filter(p => p?.day == undefined).length > 0} onClick={this.submitPreferences(user._id)}>
                     <SendIcon />
                 </IconButton>
             </div>
@@ -68,8 +70,8 @@ export default class PreferencesPage extends Component {
 
 
 
-    addNewPreference = (isRequest) =>()=> {
-        this.setState(({ preferences }) => ({ preferences: [...preferences, {isRequest}] }));
+    addNewPreference = (isRequest) => () => {
+        this.setState(({ preferences }) => ({ preferences: [...preferences, { isRequest }] }));
     };
     removePreference = (index) => () =>
         this.setState(({ preferences }) => ({ preferences: removeElement(index, preferences) }));
@@ -105,3 +107,5 @@ export default class PreferencesPage extends Component {
         (priority) =>
             this.setState(({ preferences }) => ({ preferences: updateElement(index, "priority", priority, preferences) }));
 }
+
+export default withRouter(PreferencesPage);

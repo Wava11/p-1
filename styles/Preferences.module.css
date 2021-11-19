@@ -1,23 +1,24 @@
 .padded {
-    margin: 15px;
+    margin: 25px;
     padding: 10px;
 }
 
-.input {
-    width: 180px;
-    margin: 10px;
-}
-
 .actionsArea {
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: right;
 }
 
 .action {
-    
+    margin: 10px;
+    padding: 10px;
 }
 
 .sendButton {
     transform: scaleX(-1);
+}
+
+.preferencesList {
+    padding: 10px;
 }

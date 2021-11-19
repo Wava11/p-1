@@ -1,25 +1,21 @@
 import Link from 'next/link';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import styles from '../styles/Home.module.css';
-import { UserContext } from '../user.session';
+import Button from '@mui/material/Button';
 
 export default function Home() {
   const [loggedUsername, setLoggedUsername] = useState("");
-  const userContextValue = { setLoggedUsername, loggedUsername }
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <div className={styles.grid}>
+          <Link href="/login">
+            <Button>Login</Button>
+          </Link>
 
-          <UserContext.Provider value={userContextValue}>
-            <Link href="/login">
-              <a>Login</a>
-            </Link>
-
-            <Link href="/schedule">
-              <a>Schedule</a>
-            </Link>
-          </UserContext.Provider>
+          <Link href="/schedule">
+            <Button>Schedule</Button>
+          </Link>
         </div>
       </main>
 

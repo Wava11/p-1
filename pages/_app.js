@@ -31,7 +31,7 @@ export default function MyApp({ Component, pageProps }) {
           sizes="32x32"
         />
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
-        <meta name="theme-color" content="#317EFB" />
+        <meta name="theme-color" content="#e26d5c" />
       </Head>
       <Component {...pageProps} user={user} setUser={setUser} />
     </>
