@@ -17,11 +17,9 @@ export default class LoginPage extends Component {
         this.setState({ allTeams });
     }
     render() {
-        const { setUser } = this.props;
         const { allTeams, selectedTeam, selectedUser } = this.state;
         if (allTeams) {
             return <Card className={styles.root}>
-                <FormControl>
                     <Select
                         displayEmpty
                         value={selectedTeam}
@@ -43,11 +41,10 @@ export default class LoginPage extends Component {
                     >
                         {selectedTeam?.members?.map?.((user) => <MenuItem key={user._id} value={user}>{user.name}</MenuItem>)}
                     </Select>
-                </FormControl>
 
                 <Link
                     href="/preferences">
-                    <IconButton disabled={selectedUser == undefined} style={{ width: "50px" }} onClick={this.login(setUser)}>
+                    <IconButton disabled={selectedUser == undefined} style={{ width: "50px" }} onClick={this.login}>
                         <LoginIcon fontSize="large" />
                     </IconButton>
                 </Link>

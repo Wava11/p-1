@@ -1,7 +1,9 @@
+import { ThemeProvider } from '@mui/material';
 import Head from 'next/head';
 import { useState } from 'react';
 import Layout from '../components/layout';
 import '../styles/globals.css';
+import { theme } from '../utils/theme';
 
 export default function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState();
@@ -32,11 +34,13 @@ export default function MyApp({ Component, pageProps }) {
           sizes="32x32"
         />
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
-        <meta name="theme-color" content="#e26d5c" />
+        <meta name="theme-color" content="#00838f" />
       </Head>
-      <Layout>
-      <Component {...pageProps} user={user} setUser={setUser} />
-      </Layout>
+      <ThemeProvider theme={theme}>
+        <Layout user={user}>
+          <Component {...pageProps} user={user} setUser={setUser} />
+        </Layout>
+      </ThemeProvider>
     </>
   );
 }
