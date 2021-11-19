@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { useState } from 'react';
+import Layout from '../components/layout';
 import '../styles/globals.css';
 
 export default function MyApp({ Component, pageProps }) {
@@ -33,7 +34,9 @@ export default function MyApp({ Component, pageProps }) {
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#e26d5c" />
       </Head>
+      <Layout>
       <Component {...pageProps} user={user} setUser={setUser} />
+      </Layout>
     </>
   );
 }

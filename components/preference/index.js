@@ -12,7 +12,7 @@ export class PreferenceView extends Component {
         this.state = {};
     }
     render() {
-        const { onRemove, onSetComment, onSetDay, onSetPriority, preference } = this.props;
+        const { onRemove, onSetComment, onSetDay, onSetPriority, preference, selectableDaysIds } = this.props;
         return <div className={styles.root}>
             {preference.isRequest ? <EventAvailableIcon color="success" className={styles.icon} /> : <EventBusyIcon color="warning" className={styles.icon} />}
             <div className={styles.inputs}>
@@ -26,7 +26,7 @@ export class PreferenceView extends Component {
                             selected ? selected.name : <em> יום...</em>
                         }
                     >
-                        {days.map(day => <MenuItem value={day}>{day.name}</MenuItem>)}
+                        {days.map(day => <MenuItem disabled={!selectableDaysIds.includes(day)} value={day}>{day.name}</MenuItem>)}
                     </Select>
                 </FormControl>
 

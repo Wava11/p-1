@@ -2,7 +2,8 @@ import LoginIcon from '@mui/icons-material/Login';
 import { Card, FormControl, IconButton, MenuItem, Select } from '@mui/material';
 import Link from 'next/link';
 import React, { Component } from 'react';
-import styles from '../../styles/Login.module.css'
+import Layout from '../../components/layout';
+import styles from '../../styles/Login.module.css';
 import { getAllTeams } from '../../utils/login.api';
 
 export default class LoginPage extends Component {
@@ -33,7 +34,7 @@ export default class LoginPage extends Component {
                     </Select>
                     <Select
                         displayEmpty
-                        disabled={selectedTeam==undefined}
+                        disabled={selectedTeam == undefined}
                         value={selectedUser}
                         onChange={e => this.setState({ selectedUser: e.target.value })}
                         renderValue={selected =>
@@ -46,7 +47,7 @@ export default class LoginPage extends Component {
 
                 <Link
                     href="/preferences">
-                    <IconButton disabled={selectedUser==undefined} style={{width:"50px"}} onClick={this.login(setUser)}>
+                    <IconButton disabled={selectedUser == undefined} style={{ width: "50px" }} onClick={this.login(setUser)}>
                         <LoginIcon fontSize="large" />
                     </IconButton>
                 </Link>

@@ -9,6 +9,8 @@ import styles from '../../styles/Preferences.module.css';
 import { removeElement, updateElement } from '../../utils/array.utils';
 import { getUserPreferences, updateUserPreferences } from '../../utils/preference.api';
 import { withRouter, } from 'next/router';
+import { days } from '../../utils/preference.types';
+import Layout from '../../components/layout';
 
 class PreferencesPage extends Component {
     constructor(props) {
@@ -26,6 +28,8 @@ class PreferencesPage extends Component {
     render() {
         const { user } = this.props;
         const { preferences } = this.state;
+        const selectedDaysIds = preferences.map(({ day }) => day?._id);
+        const unselectedDaysIds = days.filter(day => !selectedDaysIds.includes(day?._id));
         if (!user) {
             return <Link href="/login"><Button>Login</Button></Link>;
         }
@@ -39,6 +43,7 @@ class PreferencesPage extends Component {
                         onSetDay={this.setDayOf(index)}
                         onSetPriority={this.setPriorityOf(index)}
                         onRemove={this.removePreference(index)}
+                        selectableDaysIds={unselectedDaysIds}
                     />
                 </div>
                 <Divider />
@@ -46,7 +51,7 @@ class PreferencesPage extends Component {
             )}
             <div className={styles.actionsArea}>
                 <Button
-                    style={{ margin: "10px",padding:"5px" }}
+                    style={{ margin: "10px", padding: "5px" }}
                     variant="outlined"
                     color="success"
                     disabled={preferences.filter(p => p?.day === undefined).length > 0}
@@ -54,7 +59,7 @@ class PreferencesPage extends Component {
                     אעדיף את יום <EventAvailableIcon />
                 </Button>
                 <Button
-                    style={{ margin: "10px",padding:"5px" }}
+                    style={{ margin: "10px", padding: "5px" }}
                     variant="outlined"
                     color="warning"
                     disabled={preferences.filter(p => p?.day === undefined).length > 0}

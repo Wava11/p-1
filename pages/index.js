@@ -1,25 +1,15 @@
-import Link from 'next/link';
-import { useState } from 'react';
 import styles from '../styles/Home.module.css';
-import Button from '@mui/material/Button';
-
+import Layout from '../components/layout';
 export default function Home() {
-  const [loggedUsername, setLoggedUsername] = useState("");
-  return (
+  return (<Layout>
     <div className={styles.container}>
       <main className={styles.main}>
         <div className={styles.grid}>
-          <Link href="/login">
-            <Button>Login</Button>
-          </Link>
 
-          <Link href="/schedule">
-            <Button>Schedule</Button>
-          </Link>
+
         </div>
       </main>
-
-
     </div>
+  </Layout>
   );
 }

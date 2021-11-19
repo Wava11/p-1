@@ -1,5 +1,6 @@
 import { Card } from '@mui/material';
 import React, { Component } from 'react';
+import Layout from '../../components/layout';
 
 export default class SchedulePage extends Component {
     constructor(props) {
@@ -11,6 +12,6 @@ export default class SchedulePage extends Component {
     render() {
         return <Card>
             schedule
-        </Card>
+        </Card>;
     }
 }
