@@ -1,5 +1,5 @@
 import { MongoClient, ObjectId } from 'mongodb';
-import { dbName, mongoConnectionString } from './db';
+import { dbName, getCollection, getConnection, mongoConnectionString } from './db';
 
 
 export const registerTeam = async (name) => {
@@ -28,9 +28,8 @@ export const addUserToTeam = async (userName, teamId) => {
 };
 
 export const getAllTeams = async () => {
-    const mongoClient = await MongoClient.connect(mongoConnectionString);
-    const users = await mongoClient.db(dbName).collection(collectionName).find({}).toArray();
-    await mongoClient.close();
+    const users = (await getCollection(collectionName)).find({}).toArray();
+    console.log("yoooo");
     return users;
 };
 
