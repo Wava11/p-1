@@ -1,7 +1,8 @@
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { FormControl, IconButton, MenuItem, Select, TextField } from '@mui/material';
 import React, { Component } from 'react';
-import { days, priorities } from '../../utils/preference.types';
+import { days } from '../../utils/day';
+import { priorities } from '../../utils/priority';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
 import styles from '../../styles/Preference.module.css';
@@ -14,7 +15,7 @@ export class PreferenceView extends Component {
     render() {
         const { onRemove, onSetComment, onSetDay, onSetPriority, preference, selectableDaysIds } = this.props;
         return <div className={styles.root}>
-            {preference.isRequest ? <EventAvailableIcon color="success" className={styles.icon} /> : <EventBusyIcon color="warning" className={styles.icon} />}
+            {preference.isAvailable ? <EventAvailableIcon color="success" className={styles.icon} /> : <EventBusyIcon color="warning" className={styles.icon} />}
             <div className={styles.inputs}>
                 <FormControl>
                     <Select

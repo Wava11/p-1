@@ -9,7 +9,7 @@ import styles from '../../styles/Preferences.module.css';
 import { removeElement, updateElement } from '../../utils/array.utils';
 import { getUserPreferences, updateUserPreferences } from '../../utils/preference.api';
 import { withRouter, } from 'next/router';
-import { days } from '../../utils/preference.types';
+import { days } from '../../utils/day';
 
 
 class PreferencesPage extends Component {
@@ -65,7 +65,7 @@ class PreferencesPage extends Component {
                         color="warning"
                         disabled={preferences.filter(p => p?.day === undefined).length > 0}
                         onClick={this.addNewPreference(false)}>
-                        <EventBusyIcon /> אעדיף שלא ביום 
+                        <EventBusyIcon /> אעדיף שלא ביום
                     </Button>
                     <IconButton className={styles.sendButton} disabled={preferences.length == 0 || preferences.filter(p => p?.day == undefined).length > 0} onClick={this.submitPreferences(user._id)}>
                         <SendIcon />
@@ -80,8 +80,8 @@ class PreferencesPage extends Component {
 
 
 
-    addNewPreference = (isRequest) => () => {
-        this.setState(({ preferences }) => ({ preferences: [...preferences, { isRequest }] }));
+    addNewPreference = (isAvailable) => () => {
+        this.setState(({ preferences }) => ({ preferences: [...preferences, { isAvailable }] }));
     };
     removePreference = (index) => () =>
         this.setState(({ preferences }) => ({ preferences: removeElement(index, preferences) }));

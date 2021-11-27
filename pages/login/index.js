@@ -1,8 +1,7 @@
 import LoginIcon from '@mui/icons-material/Login';
-import { Card, FormControl, IconButton, MenuItem, Select } from '@mui/material';
+import { Card, IconButton, MenuItem, Select } from '@mui/material';
 import Link from 'next/link';
 import React, { Component } from 'react';
-import Layout from '../../components/layout';
 import styles from '../../styles/Login.module.css';
 import { getAllTeams } from '../../utils/login.api';
 
