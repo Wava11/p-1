@@ -85,7 +85,7 @@ class PreferencesPage extends Component {
                     <Alert severity="success" >ההעדפות שלך נשמרו 😇</Alert>
                 </Snackbar>
             </>
-                : <Typography>צריך להזכר בההעדפות שלך...</Typography>
+                : <Typography>צריך להיזכר בההעדפות שלך...</Typography>
             }
         </Card >;
     }

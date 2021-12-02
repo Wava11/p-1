@@ -21,10 +21,7 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
         const userObjectId = new ObjectId(userId);
         const userPreferences: MinimalPreference[] = JSON.parse(req.body);
         const absolutePreferences: AbsolutePreference[] = userPreferences.map(toAbsolutePreference(new ObjectId(userId)));
-        console.log(` abosule ${absolutePreferences}`);
-
         await updateUserPreferences(userObjectId, absolutePreferences);
-        console.log(`minimal ${userPreferences}`);
         res.status(200).send("");
     } else {
         res.status(400).send("");

@@ -17,7 +17,6 @@ export class PreferenceView extends Component {
     }
     render() {
         const { onRemove, onSetComment, onSetDay, onSetPriority, preference, selectableDaysIds } = this.props;
-        debugger
         return <div className={styles.root}>
             {preference.isAvailable ? <EventAvailableIcon color="success" className={styles.icon} /> : <EventBusyIcon color="warning" className={styles.icon} />}
             <div className={styles.inputs}>

@@ -16,9 +16,6 @@ export const getUserPreferences = async (userId: ObjectId): Promise<AbsolutePref
             { date: { $gte: beginingOfNextWeek } },
         ]
     }).toArray() as AbsolutePreference[];
-    console.log(beginingOfNextWeek);
-    console.log(endOfNextWeek);
-    console.log(preferences);
 
     return preferences;
 };
