@@ -17,6 +17,7 @@ class PreferencesPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoaded: false,
             preferences: [],
             isSuccessAlertOpen: false
         };
@@ -26,20 +27,20 @@ class PreferencesPage extends Component {
         const { user } = this.props;
         if (user) {
             const preferences = await getUserPreferences(user._id);
-            this.setState({ preferences });
+            this.setState({ preferences, isLoaded: true });
         }
     }
 
     render() {
         const { user } = this.props;
-        const { preferences, isSuccessAlertOpen } = this.state;
+        const { preferences, isSuccessAlertOpen, isLoaded } = this.state;
         const selectedDaysIds = preferences.map(({ day }) => day?._id);
         const unselectedDaysIds = days.filter(day => !selectedDaysIds.includes(day?._id));
         if (!user) {
             return <Link href="/login"><Button>Login</Button></Link>;
         }
-        return preferences ? <>
-            < Card className={styles.padded} >
+        return < Card className={styles.padded} >
+            {isLoaded ? <>
                 <Typography>
                     אלה ההעדפות שלך לשבוע הבא:
                 </Typography>
@@ -80,13 +81,13 @@ class PreferencesPage extends Component {
                         <SendIcon />
                     </IconButton>
                 </div >
-            </Card >
-            <Snackbar anchorOrigin={{ vertical: "top", horizontal: "center" }} open={isSuccessAlertOpen} autoHideDuration={2000} onClose={this.hideSuccessAlert} >
-                <Alert severity="success" >ההעדפות שלך נשמרו 😇</Alert>
-            </Snackbar>
-        </>
-            : <></>;
-
+                <Snackbar anchorOrigin={{ vertical: "top", horizontal: "center" }} open={isSuccessAlertOpen} autoHideDuration={2000} onClose={this.hideSuccessAlert} >
+                    <Alert severity="success" >ההעדפות שלך נשמרו 😇</Alert>
+                </Snackbar>
+            </>
+                : <Typography>צריך להזכר בההעדפות שלך...</Typography>
+            }
+        </Card >;
     }
 
 
