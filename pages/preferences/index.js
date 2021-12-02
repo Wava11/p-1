@@ -10,7 +10,7 @@ import { removeElement, updateElement } from '../../utils/array.utils';
 import { getUserPreferences, updateUserPreferences } from '../../utils/preference.api';
 import { withRouter, } from 'next/router';
 import { days } from '../../utils/day';
-import { areAllPreferencesValid } from './utils';
+import { areAllPreferencesValid } from '../../utils/preferences.utils';
 
 
 class PreferencesPage extends Component {
