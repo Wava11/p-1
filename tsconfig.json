@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/preference/index.js"  ],
   "exclude": [
     "node_modules"
   ]

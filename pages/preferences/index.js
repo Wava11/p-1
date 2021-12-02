@@ -10,6 +10,7 @@ import { removeElement, updateElement } from '../../utils/array.utils';
 import { getUserPreferences, updateUserPreferences } from '../../utils/preference.api';
 import { withRouter, } from 'next/router';
 import { days } from '../../utils/day';
+import { areAllPreferencesValid } from './utils';
 
 
 class PreferencesPage extends Component {
@@ -22,8 +23,11 @@ class PreferencesPage extends Component {
     }
 
     async componentDidMount() {
-        const preferences = await getUserPreferences(this.state.username);
-        this.setState({ preferences });
+        const { user } = this.props;
+        if (user) {
+            const preferences = await getUserPreferences(user._id);
+            this.setState({ preferences });
+        }
     }
 
     render() {
@@ -34,28 +38,33 @@ class PreferencesPage extends Component {
         if (!user) {
             return <Link href="/login"><Button>Login</Button></Link>;
         }
-        return <>
-            <Card className={styles.padded}>
-                {preferences.map((preference, index) => <>
-                    <div className={styles.preferencesList}>
-                        <PreferenceView
-                            preference={preference}
-                            onSetComment={this.setCommentOf(index)}
-                            onSetDay={this.setDayOf(index)}
-                            onSetPriority={this.setPriorityOf(index)}
-                            onRemove={this.removePreference(index)}
-                            selectableDaysIds={unselectedDaysIds}
-                        />
-                    </div>
-                    <Divider />
-                </>
-                )}
-                <div className={styles.actionsArea}>
+        return preferences ? <>
+            < Card className={styles.padded} >
+                <Typography>
+                    אלה ההעדפות שלך לשבוע הבא:
+                </Typography>
+                {
+                    preferences.map((preference, index) => <>
+                        <div className={styles.preferencesList}>
+                            <PreferenceView
+                                preference={preference}
+                                onSetComment={this.setCommentOf(index)}
+                                onSetDay={this.setDayOf(index)}
+                                onSetPriority={this.setPriorityOf(index)}
+                                onRemove={this.removePreference(index)}
+                                selectableDaysIds={unselectedDaysIds}
+                            />
+                        </div>
+                        <Divider />
+                    </>
+                    )
+                }
+                < div className={styles.actionsArea} >
                     <Button
                         style={{ margin: "10px", padding: "5px" }}
                         variant="outlined"
                         color="success"
-                        disabled={preferences.filter(p => p?.day === undefined).length > 0}
+                        disabled={!areAllPreferencesValid(preferences)}
                         onClick={this.addNewPreference(true)}>
                         <EventAvailableIcon /> אעדיף את יום
                     </Button>
@@ -63,19 +72,21 @@ class PreferencesPage extends Component {
                         style={{ margin: "10px", padding: "5px" }}
                         variant="outlined"
                         color="warning"
-                        disabled={preferences.filter(p => p?.day === undefined).length > 0}
+                        disabled={!areAllPreferencesValid(preferences)}
                         onClick={this.addNewPreference(false)}>
                         <EventBusyIcon /> אעדיף שלא ביום
                     </Button>
-                    <IconButton className={styles.sendButton} disabled={preferences.length == 0 || preferences.filter(p => p?.day == undefined).length > 0} onClick={this.submitPreferences(user._id)}>
+                    <IconButton className={styles.sendButton} disabled={!this.isSubmittable()} onClick={this.submitPreferences(user._id)}>
                         <SendIcon />
                     </IconButton>
-                </div>
-            </Card>
+                </div >
+            </Card >
             <Snackbar anchorOrigin={{ vertical: "top", horizontal: "center" }} open={isSuccessAlertOpen} autoHideDuration={2000} onClose={this.hideSuccessAlert} >
                 <Alert severity="success" >ההעדפות שלך נשמרו 😇</Alert>
             </Snackbar>
-        </>;
+        </>
+            : <></>;
+
     }
 
 
@@ -121,6 +132,15 @@ class PreferencesPage extends Component {
         this.setState({ isSuccessAlertOpen: false });
     showSuccessAlert = () =>
         this.setState({ isSuccessAlertOpen: true });
+
+    isSubmittable() {
+        const { preferences } = this.state;
+        const thereIsSomePreference = preferences.length > 0;
+        const allPreferencesAreValid = areAllPreferencesValid(preferences);
+        return thereIsSomePreference && allPreferencesAreValid;
+    }
 }
 
 export default withRouter(PreferencesPage);
+
+

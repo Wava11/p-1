@@ -39,7 +39,6 @@ export const getUser = async (userId: ObjectId): Promise<User> => {
 
 export const getAllTeams = async () => {
     const users = await (await getCollection(collectionName)).find({}).toArray();
-    console.log("yoooo");
     return users;
 };
 

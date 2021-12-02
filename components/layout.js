@@ -10,7 +10,6 @@ export default function Layout({ children, user }) {
     const router = useRouter();
     const [value, setValue] = useState();
     const views = createViews(user);
-
     return <div>
         <AppBar position="static" >
             <Toolbar>
