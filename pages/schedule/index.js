@@ -1,4 +1,4 @@
-import { Card } from '@mui/material';
+import { Card, Typography } from '@mui/material';
 import React, { Component } from 'react';
 
 export default class SchedulePage extends Component {
@@ -10,7 +10,7 @@ export default class SchedulePage extends Component {
     }
     render() {
         return <Card>
-            schedule
+            <Typography>הדף עוד לא מוכן 😶‍🌫️</Typography>
         </Card>;
     }
 }
