@@ -7,3 +7,6 @@ export const updateElement = (indexToUpdate, propToUpdate, valueToUpdate, array)
             { ...element, [propToUpdate]: valueToUpdate } :
             element
     );
+
+export const lastElementOf = (array) =>
+    array[array.length - 1];
