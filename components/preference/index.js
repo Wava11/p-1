@@ -1,12 +1,11 @@
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { FormControl, IconButton, MenuItem, Select, TextField } from '@mui/material';
-import React, { Component } from 'react';
-import { days } from '../../utils/day';
-import { priorities } from '../../utils/priority';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
+import { FormControl, IconButton, MenuItem, Select, TextField } from '@mui/material';
+import React, { Component } from 'react';
 import styles from '../../styles/Preference.module.css';
-import moment from 'moment';
+import { days } from '../../utils/day';
+import { priorities } from '../../utils/priority';
 import { dateOfDayInNextWeek } from '../../utils/time';
 
 
@@ -20,8 +19,9 @@ export class PreferenceView extends Component {
         return <div className={styles.root}>
             {preference.isAvailable ? <EventAvailableIcon color="success" className={styles.icon} /> : <EventBusyIcon color="warning" className={styles.icon} />}
             <div className={styles.inputs}>
-                <FormControl>
+                <FormControl >
                     <Select
+                        size="small"
                         displayEmpty
                         value={preference.day}
                         className={styles.input}
@@ -30,12 +30,13 @@ export class PreferenceView extends Component {
                             selected ? selected.name : <em> יום...</em>
                         }
                     >
-                        {days.map(day => <MenuItem disabled={!selectableDaysIds.includes(day)} value={day}>{dateOfDayInNextWeek( day).format("DD/MM/YYYY")} {day.name}</MenuItem>)}
+                        {days.map(day => <MenuItem disabled={!selectableDaysIds.includes(day)} value={day}>{dateOfDayInNextWeek(day).format("DD/MM/YYYY")} {day.name}</MenuItem>)}
                     </Select>
                 </FormControl>
 
-                <FormControl>
+                <FormControl >
                     <Select
+                        size="small"
                         displayEmpty
                         value={preference?.priority}
                         className={styles.input}
@@ -49,7 +50,8 @@ export class PreferenceView extends Component {
                 </FormControl>
                 <FormControl>
                     <TextField
-                        label="הערות"
+                        size="small"
+                        placeholder="הערות"
                         onChange={e => onSetComment(e.target.value)}
                         className={styles.input}
                     />

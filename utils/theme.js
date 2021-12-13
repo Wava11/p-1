@@ -10,7 +10,7 @@ export const theme = createTheme({
         secondary: {
             main: '#ffc107',
         },
-        
+
     },
     direction: "rtl",
 });

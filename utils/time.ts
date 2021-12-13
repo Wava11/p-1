@@ -9,3 +9,7 @@ export const dateOfDayInNextWeek = (day: Day): Moment =>
 
 export const startOfNextWeek = (): Moment =>
     moment().add(1, 'week').startOf("week");
+
+export interface Timed {
+    date: Date;
+}

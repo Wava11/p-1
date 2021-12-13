@@ -9,3 +9,4 @@ export const days = [
 ] as const;
 
 export type Day = (typeof days)[number];
+export type DayId = Day["_id"]
