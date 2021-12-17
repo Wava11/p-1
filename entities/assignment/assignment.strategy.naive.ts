@@ -1,4 +1,4 @@
-import { UserRequest } from "../user/user.request";
+import { UserCurrentWeekPreference, UserRequest } from "../user/user.request";
 import { Assignment } from "./assignment";
 import { AssignmentStrategy } from "./assignment.strategy";
 
@@ -7,6 +7,5 @@ import { AssignmentStrategy } from "./assignment.strategy";
  */
 export class NaiveAssignmentStrategy extends AssignmentStrategy {
     calculateUserScore: (userRequest: UserRequest) => number;
-    applyScores: (usersScores: number[], usersRequests: UserRequest[]) => number;
-    
+    applyScores: (usersScores: number[], usersCurrentWeekPreferences: UserCurrentWeekPreference[]) => number;
 }

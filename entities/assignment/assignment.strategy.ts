@@ -1,13 +1,18 @@
 import { ObjectId } from "mongodb";
-import { UserRequest } from "../user/user.request";
+import { days } from "../../utils/day";
+import { dissoc } from "../../utils/types.utils";
+import { findPreferringUsersIndices } from "../preference/preference.utils";
+import { ScoreStrategy } from "../score/score.strategy";
+import { UserCurrentWeekPreference, UserRequest } from "../user/user.request";
 import { Assignment } from "./assignment";
 
-export abstract class AssignmentStrategy {
+export class AssignmentStrategy {
+    constructor(private readonly scoreStrategy: ScoreStrategy) { }
     assign(
         usersRequests: UserRequest[],
     ): Assignment {
-        const usersScores = usersRequests.map(this.calculateUserScore);
-        const usersAssignments = this.applyScores(usersScores, usersRequests);
+        const usersScores = usersRequests.map(this.scoreStrategy.calculateUserScore);
+        const trivialAssignments = this.assignTrivialPreferences(usersRequests);
         return [
             { _id: new ObjectId(), name: "" },
             { _id: new ObjectId(), name: "" },
@@ -19,6 +24,28 @@ export abstract class AssignmentStrategy {
         ];
     }
 
-    abstract calculateUserScore: (userRequest: UserRequest) => number;
-    abstract applyScores: (usersScores: number[], usersRequests: UserRequest[]) => number;
+    /**
+     * for each day
+     *  day.users = all users which prefer this day
+     *  filter day.users.length==1
+     * @param usersRequests 
+     */
+    assignTrivialPreferences(usersRequests: UserCurrentWeekPreference[]): Partial<Assignment> {
+        const currentWeekRequests = usersRequests.map(({ currentWeekPreferences }) => currentWeekPreferences);
+        return days
+            .map(day => ({
+                ...day,
+                users: findPreferringUsersIndices(currentWeekRequests)(day)
+            }))
+            .filter(({ users }) => users.length == 1)
+            .map(day => ({
+                [day._id]: dissoc("currentWeekPreferences", usersRequests[day.users[0]])
+            }))
+            .reduce((acc, curr) => ({
+                ...acc,
+                ...curr
+            }), {});
+    }
+
+
 }
