@@ -8,6 +8,10 @@ export interface HasHistories {
     assignmentHistory: AssignmentHistory;
 }
 
+export interface HasScore {
+    score: number;
+}
+
 export interface HasCurrentWeekUserRequest {
     currentWeekPreferences: Preference[];
 }
@@ -15,3 +19,7 @@ export interface HasCurrentWeekUserRequest {
 export interface UserRequest extends User, HasHistories, HasCurrentWeekUserRequest { }
 
 export interface UserCurrentWeekPreference extends User, HasCurrentWeekUserRequest { }
+
+export interface UserCurrentWeekPreferenceWithScore extends UserCurrentWeekPreference, HasScore { }
+
+export interface UserScore extends User, HasScore { }

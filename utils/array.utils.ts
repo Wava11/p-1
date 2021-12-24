@@ -15,3 +15,13 @@ export const firstElementOf = <T>(array: T[]): T | undefined =>
 
 export const isEmpty = <T>(array: T[] | []): array is [] =>
     array.length === 0;
+export const notEmpty = <T>(array: T[] | []): array is T[] =>
+    !isEmpty(array);
+
+export const sortBy = <T>(comparator: Comparator<T>) =>
+    (array: T[]): T[] =>
+        [...array].sort(comparator);
+
+interface Comparator<T> {
+    (a: T, b: T): number;
+}
