@@ -25,3 +25,6 @@ export const sortBy = <T>(comparator: Comparator<T>) =>
 interface Comparator<T> {
     (a: T, b: T): number;
 }
+
+export const randomElementOf = <T>(array: readonly T[]): T =>
+    array[Math.floor(Math.random() * array.length)];

@@ -13,8 +13,7 @@ export class AssignmentStrategy {
     ): Assignment {
         const usersCurrentWeekPreferencesWithScores = usersRequests.map(this.toUserCurrentWeekPreferenceWithScore);
         const trivialAssignments = this.assignTrivialPreferences(usersRequests);
-        const conflicts = this.calculateConflicts(usersCurrentWeekPreferencesWithScores);
-        const assignmentsToDaysWithConflictingPreferences = this.assignConflictingPreferences(conflicts);
+        const assignmentsToDaysWithConflictingPreferences = this.assignConflictingPreferences(usersCurrentWeekPreferencesWithScores);
         return this.assignNonPreferredDays(usersCurrentWeekPreferencesWithScores, { ...trivialAssignments, ...assignmentsToDaysWithConflictingPreferences });
     }
 
@@ -42,7 +41,9 @@ export class AssignmentStrategy {
             }), {});
     }
 
-    assignConflictingPreferences(conflicts: PreferencesConflicts): Partial<Assignment> {
+    assignConflictingPreferences(usersCurrentWeekPreferencesWithScores: UserCurrentWeekPreferenceWithScore[]): Partial<Assignment> {
+        const conflicts = this.calculateConflicts(usersCurrentWeekPreferencesWithScores);
+        
         throw new Error("not implemented");
     }
 
