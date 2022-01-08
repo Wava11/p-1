@@ -16,7 +16,7 @@ This directory defines the backend http API.
 1.  Minimal amount of dependencies
 2.  Plan first, then test, and finally implement
 
-
+_____
 
 
 > This project uses [`next-pwa`](https://github.com/shadowwalker/next-pwa) to create a progressive web app (PWA) powered by [Workbox](https://developers.google.com/web/tools/workbox/).
