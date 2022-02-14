@@ -11,12 +11,7 @@ $
 
 Denote $m_u:=|\{P_u[i]~|~P_u[i]=-1\}|$ as the amount of negative preferences of user $u$
 
-Let $R_u=\mathbb{Z}^7$ be user $u$'s preference priority for a given week such that a higher value of R means it has higher priority. 
-
-$
-    P_u[i]=-1 \iff u \text{ prefers day }i
-$
-
+Let $R_u\in\mathbb{Z}^7$ be user $u$'s preference priority for a given week such that a higher value of $R$ means it has higher priority. 
 
 Let $
     S_u\in\mathbb{R}
@@ -74,3 +69,5 @@ Note that we have: $
     \Sigma_i \subseteq
     \Pi_i 
 $
+
+And so, we have $A[i]=O_i[0] \in \Mu_i$, and can practically be chosen randomly among $\Mu_i$.
