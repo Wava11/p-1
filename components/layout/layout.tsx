@@ -1,9 +1,7 @@
 import EventIcon from '@mui/icons-material/Event';
 import LoginIcon from '@mui/icons-material/Login';
-import MailIcon from '@mui/icons-material/Mail';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
-import { Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
+import { Avatar, Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material";
 import { withStyles, WithStyles } from "@mui/styles";
 import { useRouter } from "next/router";
 import { FunctionComponent, useState } from "react";
@@ -22,38 +20,36 @@ const Layout: FunctionComponent<LayoutProps> = props => {
     const [value, setValue] = useState();
     const views = createViews(user);
 
+    const changeRoute = (route: string) => {
+        router.push(route)
+    };
+
     return <Box className={classes.root}>
-        <Box className={classes.main}>
+        <Box className={classes.sideMenu}>
             <Toolbar />
             <Divider />
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
+                {views.map(view => (
+                    <ListItem key={view.label} disablePadding>
+                        <ListItemButton onClick={() => changeRoute(view.route)}>
                             <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                {view.icon}
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText primary={view.label} />
                         </ListItemButton>
                     </ListItem>
                 ))}
             </List>
-            <Divider />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
+
+            <Box className={classes.avatar}>
+                <Avatar>
+                    {user?.name?.charAt?.(0)}
+                </Avatar>
+                {user ? <Typography className={classes.username}>{user.name}</Typography> : null}
+            </Box>
         </Box>
 
-        <Box className={classes.sideMenu}>
+        <Box className={classes.main}>
             {children}
         </Box>
     </Box>;
