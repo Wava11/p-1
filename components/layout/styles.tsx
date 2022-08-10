@@ -15,16 +15,5 @@ export const styles = (theme: Theme) => createStyles({
 
     sideMenu: {
         flexGrow: 1,
-        height: '100%'
     },
-
-    avatar: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: '5px'
-    },
-
-    username: {
-        paddingRight: '5px'
-    }
 });
