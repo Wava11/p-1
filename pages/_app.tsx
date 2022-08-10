@@ -1,15 +1,16 @@
 import { ThemeProvider } from '@mui/material';
+import { AppProps } from 'next/dist/shared/lib/router/router';
 import Head from 'next/head';
 import { useState } from 'react';
-import Layout from '../components/layout';
+import Layout from '../components/layout/layout';
 import '../styles/globals.css';
 import { theme } from '../utils/theme';
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState();
   return (
-    <>
-      <Head>
+    <div>
+      <Head children={''}>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta
@@ -41,6 +42,6 @@ export default function MyApp({ Component, pageProps }) {
           <Component {...pageProps} user={user} setUser={setUser} />
         </Layout>
       </ThemeProvider>
-    </>
+    </div>
   );
 }
